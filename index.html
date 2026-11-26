@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#2E1A47">
-<title>Amigo secreto da ED Dança</title>
+<title>Amigo secreto da ED dança</title>
 <meta name="description" content="Amigo secreto da ED dança: cadastre-se, espere o sorteio e descubra quem você tirou.">
 <link rel="icon" type="image/png" href="icones/favicon-32.png">
 
@@ -15,8 +15,8 @@
 <meta name="apple-mobile-web-app-title" content="amigo secreto">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Amigo secreto da ED Dança">
-<meta property="og:description" content="Cadastre-se e espere o sorteio do amigo secreto da ED Dança.">
+<meta property="og:title" content="Amigo secreto da ED dança">
+<meta property="og:description" content="Cadastre-se e espere o sorteio do amigo secreto da ED dança.">
 <meta property="og:image" content="icones/og-image.jpg">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -92,6 +92,7 @@ img{max-width:100%;display:block}
 .cena img{width:clamp(150px,44vw,210px)!important;height:auto!important;aspect-ratio:1/1;object-fit:contain!important;opacity:1!important;filter:none!important;border-radius:50%;box-shadow:0 10px 40px rgba(24,12,40,.55)}
 .cena::after{display:none!important}
 @media(min-width:760px){.cena{left:auto!important;right:6%!important;width:42%!important;top:0!important;height:100%!important;align-items:center}.cena img{width:min(380px,34vw)!important}}
+.script{font-family:'Sacramento','Brush Script MT',cursive;font-weight:400;font-size:1.45em;line-height:.7;letter-spacing:.01em;color:#D9B8FF;white-space:nowrap}
 .nota-foto{font-size:.78rem;line-height:1.45;color:#C9B8E6;max-width:44ch;margin:2px 0 0;text-shadow:0 1px 8px rgba(24,12,40,.8)}
 .abertura .lead{font-size:1.15rem;color:#EADDFB;max-width:34ch}
 .festa-info{margin:0;font-size:1.05rem}
@@ -283,7 +284,7 @@ canvas.confete{position:fixed;inset:0;width:100%;height:100%;pointer-events:none
    Enquanto estiver vazio, o app funciona em MODO DEMONSTRAÇÃO:
    os dados ficam só neste navegador e os e-mails aparecem em uma caixa simulada.
    ============================================================ */
-var API_URL = "";
+var API_URL = "https://script.google.com/macros/s/AKfycbzW4DzcjvwbmDHhPkZpbwh-PCq1PEtFy9buG6kaphv-oXeePQ-h68dmOn56_Un0v_SL/exec";
 
 /* Foto da família usada como cenário da abertura. O organizador pode trocar em Configurações. */
 var HERO = "icones/logo.png";
@@ -379,9 +380,9 @@ var AO = (function () {
     return {
       v: 1,
       config: {
-        titulo: 'Amigo secreto da ED Dança',
-        saudacao: 'Que a nossa turma continue em sintonia! Cadastre-se em um minuto e espere o sorteio do amigo secreto da ED Dança.',
-        organizador: 'ED Dança',
+        titulo: 'Amigo secreto da ED dança',
+        saudacao: 'Que a nossa turma continue em sintonia! Cadastre-se em um minuto e espere o sorteio do amigo secreto da ED dança.',
+        organizador: 'ED dança',
         dataSorteio: '2026-12-10',
         evento: {
           data: '2026-12-20',
@@ -1303,11 +1304,12 @@ function telaRevelacao() {
     }).join('') + '</div>';
   }
   var total = n + R.inimigos.length;
-  return (S.demoBanner || '') + '<div class="barra">' + luzes() + '<div class="barra-linha"><div class="quem"><b>A grande revelação</b><span>' + esc(R.titulo) + '</span></div><button class="btn btn-pequeno btn-lampada" data-act="home">Início</button></div></div>' +
+  return (S.demoBanner || '') + '<div class="barra">' + luzes() + '<div class="barra-linha"><div class="quem"><b>A grande revelação</b><span>' + tituloHtml(R.titulo) + '</span></div><button class="btn btn-pequeno btn-lampada" data-act="home">Início</button></div></div>' +
     '<main class="pagina"><h2>Quem tirou quem?</h2><p class="suave">Toque no ? para revelar cada amigo secreto.</p>' +
     '<div class="acoes" style="margin:12px 0 18px"><button class="btn" data-act="rev-proximo"' + (abertos >= total ? ' disabled' : '') + '>Revelar o próximo</button><button class="btn btn-borda" data-act="rev-todos"' + (abertos >= total ? ' disabled' : '') + '>Revelar todos</button></div>' +
     lista(R.amigos, 'a') + (R.inimigos.length ? '<h2 style="margin:28px 0 12px">Inimigos ocultos 😈</h2>' + lista(R.inimigos, 'i') : '') + '</main>';
 }
+function tituloHtml(s) { return esc(s).replace(/(dança)/i, '<span class="script">$1</span>'); }
 function luzes() {
   var cores = ['#C75BD0', '#FFC857', '#7FD1B9', '#C896FF'], k = 0, fio = 'M-10 6', bulbos = '';
   for (var i = 0; i < 4; i++) {
@@ -1343,8 +1345,8 @@ function telaAbertura() {
   if (c.revelacao) acoes += '<button class="btn btn-borda btn-grande" style="color:#fff;border-color:#fff" data-act="ver-revelacao">Ver a revelação 🎁</button>';
   var situacao = aberta ? '' : '<p class="lead" style="font-weight:700;color:#FFC857">' + (c.fase === 'aguardando' ? 'As inscrições foram encerradas. O sorteio será em ' + AO.fmtBR(c.dataSorteio) + '.' : 'O sorteio já foi feito. Entre para descobrir quem você tirou.') + '</p>';
   return (S.demoBanner || '') + '<main class="abertura">' + luzes() +
-    folhasHtml() + '<div class="cena"><img src="' + esc(capa) + '" alt="ED Dança"></div>' +
-    '<div class="abertura-miolo"><h1>' + esc(c.titulo) + '</h1><p class="lead">' + esc(c.saudacao) + '</p>' + situacao +
+    folhasHtml() + '<div class="cena"><img src="' + esc(capa) + '" alt="ED dança"></div>' +
+    '<div class="abertura-miolo"><h1>' + tituloHtml(c.titulo) + '</h1><p class="lead">' + esc(c.saudacao) + '</p>' + situacao +
     '<p class="festa-info"><b>' + esc(dataLonga(c.evento.data)) + ', às ' + esc(c.evento.hora) + '</b>' + esc(c.evento.local) + '<br><span style="color:#D6C6F0">' + esc(c.evento.endereco) + '</span></p>' +
     '<div class="acoes">' + acoes + '</div>' + avatarPilha() + (c.notaFoto ? '<p class="nota-foto">' + esc(c.notaFoto) + '</p>' : '') + '</div>' +
     '<div class="rodape-mini"><span>Organizado por ' + esc(c.organizador) + '</span><button class="btn-link" data-act="admin">Organizador</button></div></main>';
@@ -1433,7 +1435,7 @@ function telaCadastro() {
       '<p class="erro" id="erro-cad" role="alert"></p><div class="acoes" style="margin-top:14px"><button class="btn btn-borda" data-act="cad-voltar">Voltar</button><button class="btn btn-grande" data-act="cad-enviar">Concluir cadastro</button></div>' +
       '<p style="margin-top:14px"><button class="btn-link suave" data-act="cad-enviar-sem">Concluir sem assinar</button></p>';
   }
-  return '<div class="barra">' + luzes() + '<div class="barra-linha"><div class="quem"><b>' + esc(S.pub.config.titulo) + '</b></div><button class="btn btn-pequeno btn-lampada" data-act="home">Cancelar</button></div></div>' +
+  return '<div class="barra">' + luzes() + '<div class="barra-linha"><div class="quem"><b>' + tituloHtml(S.pub.config.titulo) + '</b></div><button class="btn btn-pequeno btn-lampada" data-act="home">Cancelar</button></div></div>' +
     '<main class="pagina"><section>' + miolo + '</section></main>';
 }
 
@@ -1634,7 +1636,7 @@ function admConfig() {
     '<div class="campo"><label for="f-titulo">Título</label><input id="f-titulo" type="text" maxlength="80" data-b="adm.cfg.titulo" value="' + esc(f.titulo) + '"></div>' +
     '<div class="campo"><label for="f-sauda">Saudação da tela de abertura</label><textarea id="f-sauda" maxlength="300" data-b="adm.cfg.saudacao">' + esc(f.saudacao) + '</textarea></div>' +
     '<div class="campo"><label for="f-nota">Recado em letra pequena sobre a foto <span class="dica">(deixe vazio para não mostrar)</span></label><textarea id="f-nota" maxlength="200" data-b="adm.cfg.notaFoto">' + esc(f.notaFoto) + '</textarea></div>' +
-    '<div class="campo"><label>Foto da tela de abertura <span class="dica">(o logo da ED Dança já vem de padrão)</span></label><div class="foto-presente"><div class="quadro" style="width:96px;height:96px">' + '<img src="' + esc(f.capa || HERO) + '" alt="">' + '</div>' +
+    '<div class="campo"><label>Foto da tela de abertura <span class="dica">(o logo da ED dança já vem de padrão)</span></label><div class="foto-presente"><div class="quadro" style="width:96px;height:96px">' + '<img src="' + esc(f.capa || HERO) + '" alt="">' + '</div>' +
     '<label class="btn btn-borda btn-pequeno">Escolher foto<input type="file" accept="image/*" hidden data-foto="adm.cfg.capa" data-tipo="capa"></label>' + (f.capa ? '<button class="btn-link" data-act="tirar-capa">Voltar para a foto da família</button>' : '') + '</div></div>' +
     '<div class="linha-2"><div class="campo"><label for="f-org">Organizador</label><input id="f-org" type="text" maxlength="40" data-b="adm.cfg.organizador" value="' + esc(f.organizador) + '"></div>' +
     '<div class="campo"><label for="f-ds">Data do sorteio</label><input id="f-ds" type="date" data-b="adm.cfg.dataSorteio" value="' + esc(f.dataSorteio) + '"></div></div>' +
@@ -1808,7 +1810,7 @@ function iniciarPads() {
 var raiz = document.getElementById('app');
 function render() {
   var y = window.scrollY, html;
-  S.demoBanner = API_URL ? 'https://script.google.com/macros/s/AKfycbzW4DzcjvwbmDHhPkZpbwh-PCq1PEtFy9buG6kaphv-oXeePQ-h68dmOn56_Un0v_SL/exec' : '<div class="faixa-demo">Modo demonstração: os dados ficam só neste navegador</div>';
+  S.demoBanner = API_URL ? '' : '<div class="faixa-demo">Modo demonstração: os dados ficam só neste navegador</div>';
   if (S.view === 'carregando') html = '<div class="carregando">Pendurando as luzes...</div>';
   else if (!S.pub) html = '<div class="carregando" style="padding:24px;text-align:center">Não consegui falar com o servidor.<br><button class="btn btn-lampada" style="margin-top:16px" data-act="recarregar">Tentar de novo</button></div>';
   else if (S.view === 'cadastro') html = telaCadastro();
